@@ -1,0 +1,55 @@
+{
+  "name": "fetchiva",
+  "version": "0.0.1",
+  "description": "A modern, type-safe fetch client for JavaScript and TypeScript",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest",
+    "test:coverage": "vitest --coverage",
+    "lint": "eslint src --ext .ts",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "pnpm run build"
+  },
+  "keywords": [
+    "fetch",
+    "http",
+    "client",
+    "api",
+    "typescript",
+    "rest"
+  ],
+  "author": "Emre Memiş",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/memisemre/fetchiva"
+  },
+  "bugs": {
+    "url": "https://github.com/memisemre/fetchiva/issues"
+  },
+  "homepage": "https://github.com/memisemre/fetchiva#readme",
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.7.0",
+    "vitest": "^2.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "packageManager": "pnpm@9.15.4"
+}
