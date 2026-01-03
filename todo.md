@@ -9,25 +9,25 @@ It serves as a lightweight roadmap and internal development checklist.
 
 > Goal: Stable, framework-agnostic, browser-first fetch client
 
-- [ ] Global configuration support (`baseURL`, `headers`)
-- [ ] Explicit initialization via `configureFetchiva`
-- [ ] Framework-agnostic setup (HTML, React, Vue, etc.)
-- [ ] Core `fetchiva(path, options)` wrapper
+- [x] Global configuration support (`baseURL`, `headers`)
+- [x] Explicit initialization via `configureFetchiva`
+- [x] Framework-agnostic setup (HTML, React, Vue, etc.)
+- [x] Core `fetchiva(path, options)` wrapper
 - [ ] HTTP method helpers:
   - [ ] `get`
   - [ ] `post`
   - [ ] `put`
   - [ ] `patch`
   - [ ] `delete`
-- [ ] Request-level override for:
-  - [ ] `baseURL`
-  - [ ] `headers`
-- [ ] Timeout support using `AbortController`
+- [x] Request-level override for:
+  - [x] `baseURL`
+  - [x] `headers`
+- [x] Timeout support using `AbortController`
 - [ ] Unified error handling (network, timeout, HTTP errors)
-- [ ] TypeScript types for public API
+- [x] TypeScript types for public API
 - [ ] JSDoc documentation for all public methods
-- [ ] Playground for local development (not published to npm)
-- [ ] Clean npm publish setup (`dist` only)
+- [x] Playground for local development (not published to npm)
+- [x] Clean npm publish setup (`dist` only)
 
 ---
 
@@ -35,10 +35,10 @@ It serves as a lightweight roadmap and internal development checklist.
 
 > Goal: Better DX and safer defaults
 
-- [ ] Default headers merge (global + request-level)
+- [x] Default headers merge (global + request-level)
 - [ ] Automatic JSON handling:
   - [ ] JSON body serialization
-  - [ ] JSON response parsing
+  - [x] JSON response parsing
 - [ ] Basic retry mechanism (network / 5xx only)
 - [ ] Better error messages for missing configuration
 - [ ] Improved TypeScript inference for options
