@@ -28,6 +28,13 @@ It serves as a lightweight roadmap and internal development checklist.
 - [ ] JSDoc documentation for all public methods
 - [x] Playground for local development (not published to npm)
 - [x] Clean npm publish setup (`dist` only)
+- [x] Default headers merge (global + request-level)
+- [ ] Request lifecycle hooks:
+  - [ ] `onRequest`
+  - [ ] `onResponse`
+  - [ ] `onError`
+- [ ] Better playground examples
+- [ ] Basic retry mechanism (network / 5xx only)
 
 ---
 
@@ -35,11 +42,8 @@ It serves as a lightweight roadmap and internal development checklist.
 
 > Goal: Better DX and safer defaults
 
-- [x] Default headers merge (global + request-level)
 - [ ] Automatic JSON handling:
   - [ ] JSON body serialization
-  - [x] JSON response parsing
-- [ ] Basic retry mechanism (network / 5xx only)
 - [ ] Better error messages for missing configuration
 - [ ] Improved TypeScript inference for options
 
@@ -49,13 +53,8 @@ It serves as a lightweight roadmap and internal development checklist.
 
 > Goal: Make Fetchiva pleasant to use and extend
 
-- [ ] Request lifecycle hooks:
-  - [ ] `onRequest`
-  - [ ] `onResponse`
-  - [ ] `onError`
 - [ ] Debug / dev mode logging
 - [ ] Reset configuration helper (for testing)
-- [ ] Better playground examples
 
 ---
 
@@ -82,9 +81,3 @@ It serves as a lightweight roadmap and internal development checklist.
 - Easy to debug
 
 ---
-
-## Notes
-
-- Configuration must be initialized once at app startup.
-- Playground is for development only and should not be published to npm.
-- Global mutable state is allowed but must be explicit and documented.
