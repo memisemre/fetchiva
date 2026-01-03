@@ -1,4 +1,8 @@
-export const VERSION = "0.0.1";
+export { configureFetchiva } from "./config";
+export { fetchiva } from "./fetchiva";
 
-// Fetchiva - A modern fetch client
-// TODO: Implement fetch client
+export type {
+  FetchivaConfig,
+  FetchivaRequestOptions,
+  FetchivaResponse,
+} from "./types";
