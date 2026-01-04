@@ -93,6 +93,22 @@ It serves as a lightweight roadmap and internal development checklist.
 
 ---
 
+## v3 – Tooling & CLI
+
+> Goal: Provide a lightweight CLI built on top of Fetchiva core for developer workflows
+
+### Fetchiva CLI (Planned)
+
+- [ ] Introduce a dedicated CLI package (`create-fetchiva` or `fetchiva-cli`)
+- [ ] Build CLI on top of Fetchiva v2 Node adapter
+- [ ] Keep CLI as a thin layer (no core logic duplication)
+- [ ] Support basic request execution from terminal
+- [ ] Allow loading configuration from a config file
+- [ ] Pretty-print JSON responses and errors
+- [ ] Exit with proper status codes for scripting usage
+
+---
+
 ## Design Principles
 
 - Browser-first
