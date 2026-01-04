@@ -25,6 +25,8 @@ function getTimeout(requestTimeout?: number): number | undefined {
   return requestTimeout ?? getConfig().timeout;
 }
 
+type HttpMethodOptions = Omit<FetchivaRequestOptions, "method" | "body">;
+
 export async function fetchiva<T = unknown>(
   path: string,
   options: FetchivaRequestOptions = {}
@@ -64,4 +66,42 @@ export async function fetchiva<T = unknown>(
       clearTimeout(timeoutId);
     }
   }
+}
+
+export function get<T = unknown>(
+  path: string,
+  options: HttpMethodOptions = {}
+): Promise<FetchivaResponse<T>> {
+  return fetchiva<T>(path, { ...options, method: "GET" });
+}
+
+export function post<T = unknown>(
+  path: string,
+  body?: BodyInit | null,
+  options: HttpMethodOptions = {}
+): Promise<FetchivaResponse<T>> {
+  return fetchiva<T>(path, { ...options, method: "POST", body });
+}
+
+export function put<T = unknown>(
+  path: string,
+  body?: BodyInit | null,
+  options: HttpMethodOptions = {}
+): Promise<FetchivaResponse<T>> {
+  return fetchiva<T>(path, { ...options, method: "PUT", body });
+}
+
+export function patch<T = unknown>(
+  path: string,
+  body?: BodyInit | null,
+  options: HttpMethodOptions = {}
+): Promise<FetchivaResponse<T>> {
+  return fetchiva<T>(path, { ...options, method: "PATCH", body });
+}
+
+export function del<T = unknown>(
+  path: string,
+  options: HttpMethodOptions = {}
+): Promise<FetchivaResponse<T>> {
+  return fetchiva<T>(path, { ...options, method: "DELETE" });
 }
