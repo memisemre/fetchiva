@@ -13,12 +13,12 @@ It serves as a lightweight roadmap and internal development checklist.
 - [x] Explicit initialization via `configureFetchiva`
 - [x] Framework-agnostic setup (HTML, React, Vue, etc.)
 - [x] Core `fetchiva(path, options)` wrapper
-- [ ] HTTP method helpers:
-  - [ ] `get`
-  - [ ] `post`
-  - [ ] `put`
-  - [ ] `patch`
-  - [ ] `delete`
+- [x] HTTP method helpers:
+  - [x] `get`
+  - [x] `post`
+  - [x] `put`
+  - [x] `patch`
+  - [x] `del`
 - [x] Request-level override for:
   - [x] `baseURL`
   - [x] `headers`
@@ -35,6 +35,8 @@ It serves as a lightweight roadmap and internal development checklist.
   - [ ] `onError`
 - [ ] Better playground examples
 - [ ] Basic retry mechanism (network / 5xx only)
+- [ ] Write README.md (installation, usage, examples)
+- [ ] Add basic test coverage
 
 ---
 
@@ -55,6 +57,7 @@ It serves as a lightweight roadmap and internal development checklist.
 
 - [ ] Debug / dev mode logging
 - [ ] Reset configuration helper (for testing)
+- [ ] Create docs website
 
 ---
 
@@ -68,6 +71,25 @@ It serves as a lightweight roadmap and internal development checklist.
 - [ ] Plugin system
 - [ ] Rate-limit / queue support
 - [ ] Node-specific helpers (optional)
+
+> Goal: Extend Fetchiva to non-browser environments without compromising core predictability
+
+### Node.js Adapter (Planned)
+
+- [ ] Introduce a dedicated Node.js adapter (`fetchiva/node`)
+- [ ] Keep core fetch logic environment-agnostic
+- [ ] Use native Node.js fetch or `undici` under the hood
+- [ ] Explicit adapter-based imports (no runtime environment detection)
+- [ ] Support AbortController and timeout handling in Node
+- [ ] Normalize error behavior between browser and Node environments
+- [ ] Document browser vs Node behavior differences clearly
+
+### Non-goals for Node Adapter
+
+- [ ] No filesystem helpers
+- [ ] No streaming abstractions
+- [ ] No automatic polyfills
+- [ ] No environment auto-detection
 
 ---
 
