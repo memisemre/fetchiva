@@ -29,10 +29,10 @@ It serves as a lightweight roadmap and internal development checklist.
 - [x] Playground for local development (not published to npm)
 - [x] Clean npm publish setup (`dist` only)
 - [x] Default headers merge (global + request-level)
-- [ ] Request lifecycle hooks:
-  - [ ] `onRequest`
-  - [ ] `onResponse`
-  - [ ] `onError`
+- [x] Request lifecycle hooks:
+  - [x] `onRequest`
+  - [x] `onResponse`
+  - [x] `onError`
 - [ ] Better playground examples
 - [ ] Basic retry mechanism (network / 5xx only)
 - [ ] Write README.md (installation, usage, examples)

@@ -1,5 +1,9 @@
 import { getConfig } from "./config";
-import type { FetchivaRequestOptions, FetchivaResponse } from "./types";
+import type {
+  FetchivaRequestContext,
+  FetchivaRequestOptions,
+  FetchivaResponse,
+} from "./types";
 
 function buildURL(path: string, baseURL?: string): string {
   const base = baseURL ?? getConfig().baseURL;
@@ -31,6 +35,7 @@ export async function fetchiva<T = unknown>(
   path: string,
   options: FetchivaRequestOptions = {}
 ): Promise<FetchivaResponse<T>> {
+  const config = getConfig();
   const { baseURL, headers, timeout, ...fetchOptions } = options;
 
   const url = buildURL(path, baseURL);
@@ -45,22 +50,48 @@ export async function fetchiva<T = unknown>(
     timeoutId = setTimeout(() => controller!.abort(), finalTimeout);
   }
 
-  try {
-    const response = await fetch(url, {
+  let requestContext: FetchivaRequestContext = {
+    url,
+    options: {
       ...fetchOptions,
       headers: mergedHeaders,
       signal: controller?.signal ?? options.signal,
-    });
+    },
+  };
+
+  try {
+    if (config.onRequest) {
+      const modifiedContext = await config.onRequest(requestContext);
+      if (modifiedContext) {
+        requestContext = modifiedContext;
+      }
+    }
+
+    const response = await fetch(requestContext.url, requestContext.options);
 
     const data = (await response.json()) as T;
 
-    return {
+    let result: FetchivaResponse<T> = {
       data,
       status: response.status,
       statusText: response.statusText,
       headers: response.headers,
       ok: response.ok,
     };
+
+    if (config.onResponse) {
+      const modifiedResponse = await config.onResponse(result);
+      if (modifiedResponse) {
+        result = modifiedResponse as FetchivaResponse<T>;
+      }
+    }
+
+    return result;
+  } catch (error) {
+    if (config.onError) {
+      await config.onError(error as Error);
+    }
+    throw error;
   } finally {
     if (timeoutId) {
       clearTimeout(timeoutId);
