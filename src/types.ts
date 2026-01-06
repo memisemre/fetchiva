@@ -21,10 +21,16 @@ export type OnResponseHook = <T = unknown>(
 
 export type OnErrorHook = (error: Error) => void | Promise<void>;
 
+export interface RetryConfig {
+  retries?: number;
+  retryDelay?: number;
+}
+
 export interface FetchivaConfig {
   baseURL?: string;
   headers?: Record<string, string>;
   timeout?: number;
+  retry?: RetryConfig;
   onRequest?: OnRequestHook;
   onResponse?: OnResponseHook;
   onError?: OnErrorHook;
@@ -34,4 +40,5 @@ export interface FetchivaRequestOptions extends Omit<RequestInit, "headers"> {
   baseURL?: string;
   headers?: Record<string, string>;
   timeout?: number;
+  retry?: RetryConfig;
 }

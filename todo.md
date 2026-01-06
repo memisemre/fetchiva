@@ -34,7 +34,7 @@ It serves as a lightweight roadmap and internal development checklist.
   - [x] `onResponse`
   - [x] `onError`
 - [ ] Better playground examples
-- [ ] Basic retry mechanism (network / 5xx only)
+- [x] Basic retry mechanism (network / 5xx only)
 - [ ] Write README.md (installation, usage, examples)
 - [ ] Add basic test coverage
 

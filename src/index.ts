@@ -9,4 +9,5 @@ export type {
   OnErrorHook,
   OnRequestHook,
   OnResponseHook,
+  RetryConfig,
 } from "./types";
