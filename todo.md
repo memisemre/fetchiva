@@ -23,7 +23,7 @@ It serves as a lightweight roadmap and internal development checklist.
   - [x] `baseURL`
   - [x] `headers`
 - [x] Timeout support using `AbortController`
-- [ ] Unified error handling (network, timeout, HTTP errors)
+- [x] Unified error handling (network, timeout, HTTP errors)
 - [x] TypeScript types for public API
 - [ ] JSDoc documentation for all public methods
 - [x] Playground for local development (not published to npm)

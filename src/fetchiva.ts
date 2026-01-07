@@ -1,4 +1,10 @@
 import { getConfig } from "./config";
+import {
+  HttpError,
+  NetworkError,
+  TimeoutError,
+  type FetchivaError,
+} from "./errors";
 import type {
   FetchivaRequestContext,
   FetchivaRequestOptions,
@@ -9,6 +15,12 @@ import type {
 const DEFAULT_RETRY_DELAY = 1000;
 
 function isRetryableError(error: Error): boolean {
+  if (error instanceof TimeoutError || error instanceof NetworkError) {
+    return true;
+  }
+  if (error instanceof HttpError) {
+    return error.status >= 500 && error.status < 600;
+  }
   return (
     error.name === "TypeError" ||
     error.name === "AbortError" ||
@@ -19,6 +31,19 @@ function isRetryableError(error: Error): boolean {
 
 function isRetryableStatus(status: number): boolean {
   return status >= 500 && status < 600;
+}
+
+function isTimeoutAbort(error: Error, controller?: AbortController): boolean {
+  return error.name === "AbortError" && controller?.signal.aborted === true;
+}
+
+function isNetworkLikeError(error: Error): boolean {
+  return (
+    error.name === "TypeError" ||
+    error.message.includes("network") ||
+    error.message.includes("fetch") ||
+    error.message.includes("Failed to fetch")
+  );
 }
 
 function getRetryConfig(requestRetry?: RetryConfig): RetryConfig {
@@ -108,6 +133,23 @@ export async function fetchiva<T = unknown>(
         continue;
       }
 
+      if (!response.ok) {
+        const httpError = new HttpError(
+          `HTTP ${response.status}: ${response.statusText}`,
+          {
+            status: response.status,
+            statusText: response.statusText,
+            url: requestContext.url,
+            method: requestContext.options.method,
+          }
+        );
+
+        if (config.onError) {
+          await config.onError(httpError);
+        }
+        throw httpError;
+      }
+
       const data = (await response.json()) as T;
 
       let result: FetchivaResponse<T> = {
@@ -127,9 +169,31 @@ export async function fetchiva<T = unknown>(
 
       return result;
     } catch (error) {
-      lastError = error as Error;
+      const rawError = error as Error;
+      let fetchivaError: FetchivaError | Error;
 
-      if (isRetryableError(lastError) && attempt < maxRetries) {
+      if (isTimeoutAbort(rawError, controller)) {
+        fetchivaError = new TimeoutError(
+          `Request timeout after ${finalTimeout}ms`,
+          {
+            cause: rawError,
+            url: requestContext.url,
+            method: requestContext.options.method,
+          }
+        );
+      } else if (isNetworkLikeError(rawError)) {
+        fetchivaError = new NetworkError(rawError.message || "Network error", {
+          cause: rawError,
+          url: requestContext.url,
+          method: requestContext.options.method,
+        });
+      } else {
+        fetchivaError = rawError;
+      }
+
+      lastError = fetchivaError;
+
+      if (isRetryableError(fetchivaError) && attempt < maxRetries) {
         attempt++;
         if (timeoutId) clearTimeout(timeoutId);
         await delay(retryDelay);
@@ -137,9 +201,9 @@ export async function fetchiva<T = unknown>(
       }
 
       if (config.onError) {
-        await config.onError(lastError);
+        await config.onError(fetchivaError);
       }
-      throw lastError;
+      throw fetchivaError;
     } finally {
       if (timeoutId) {
         clearTimeout(timeoutId);
