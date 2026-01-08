@@ -36,7 +36,7 @@ It serves as a lightweight roadmap and internal development checklist.
 - [ ] Better playground examples
 - [x] Basic retry mechanism (network / 5xx only)
 - [ ] Write README.md (installation, usage, examples)
-- [ ] Add basic test coverage
+- [x] Add basic test coverage
 
 ---
 
