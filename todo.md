@@ -25,7 +25,7 @@ It serves as a lightweight roadmap and internal development checklist.
 - [x] Timeout support using `AbortController`
 - [x] Unified error handling (network, timeout, HTTP errors)
 - [x] TypeScript types for public API
-- [ ] JSDoc documentation for all public methods
+- [x] JSDoc documentation for all public methods
 - [x] Playground for local development (not published to npm)
 - [x] Clean npm publish setup (`dist` only)
 - [x] Default headers merge (global + request-level)

@@ -81,6 +81,30 @@ function getTimeout(requestTimeout?: number): number | undefined {
 
 type HttpMethodOptions = Omit<FetchivaRequestOptions, "method" | "body">;
 
+/**
+ * Makes an HTTP request with automatic retries, timeout handling, and lifecycle hooks.
+ * This is the core function that powers all HTTP method helpers.
+ * @template T - The expected type of the response data
+ * @param path - The URL path or full URL to request
+ * @param options - Request options including method, headers, body, timeout, and retry config
+ * @returns A promise that resolves to a FetchivaResponse containing the parsed JSON data
+ * @throws {HttpError} When the server returns a non-OK status code (4xx, 5xx)
+ * @throws {TimeoutError} When the request exceeds the configured timeout
+ * @throws {NetworkError} When a network failure occurs
+ * @example
+ * ```ts
+ * // Basic GET request
+ * const response = await fetchiva<User[]>('/api/users');
+ * console.log(response.data);
+ *
+ * // POST request with body
+ * const response = await fetchiva<User>('/api/users', {
+ *   method: 'POST',
+ *   body: JSON.stringify({ name: 'John' }),
+ *   headers: { 'Content-Type': 'application/json' }
+ * });
+ * ```
+ */
 export async function fetchiva<T = unknown>(
   path: string,
   options: FetchivaRequestOptions = {}
@@ -217,6 +241,20 @@ export async function fetchiva<T = unknown>(
   throw lastError;
 }
 
+/**
+ * Makes a GET request.
+ * @template T - The expected type of the response data
+ * @param path - The URL path or full URL to request
+ * @param options - Request options (headers, timeout, retry config)
+ * @returns A promise that resolves to a FetchivaResponse
+ * @throws {HttpError} When the server returns a non-OK status code
+ * @throws {TimeoutError} When the request exceeds the configured timeout
+ * @throws {NetworkError} When a network failure occurs
+ * @example
+ * ```ts
+ * const { data } = await get<User[]>('/api/users');
+ * ```
+ */
 export function get<T = unknown>(
   path: string,
   options: HttpMethodOptions = {}
@@ -224,6 +262,23 @@ export function get<T = unknown>(
   return fetchiva<T>(path, { ...options, method: "GET" });
 }
 
+/**
+ * Makes a POST request.
+ * @template T - The expected type of the response data
+ * @param path - The URL path or full URL to request
+ * @param body - The request body (will be sent as-is, use JSON.stringify for objects)
+ * @param options - Request options (headers, timeout, retry config)
+ * @returns A promise that resolves to a FetchivaResponse
+ * @throws {HttpError} When the server returns a non-OK status code
+ * @throws {TimeoutError} When the request exceeds the configured timeout
+ * @throws {NetworkError} When a network failure occurs
+ * @example
+ * ```ts
+ * const { data } = await post<User>('/api/users', JSON.stringify({ name: 'John' }), {
+ *   headers: { 'Content-Type': 'application/json' }
+ * });
+ * ```
+ */
 export function post<T = unknown>(
   path: string,
   body?: BodyInit | null,
@@ -232,6 +287,23 @@ export function post<T = unknown>(
   return fetchiva<T>(path, { ...options, method: "POST", body });
 }
 
+/**
+ * Makes a PUT request.
+ * @template T - The expected type of the response data
+ * @param path - The URL path or full URL to request
+ * @param body - The request body (will be sent as-is, use JSON.stringify for objects)
+ * @param options - Request options (headers, timeout, retry config)
+ * @returns A promise that resolves to a FetchivaResponse
+ * @throws {HttpError} When the server returns a non-OK status code
+ * @throws {TimeoutError} When the request exceeds the configured timeout
+ * @throws {NetworkError} When a network failure occurs
+ * @example
+ * ```ts
+ * const { data } = await put<User>('/api/users/1', JSON.stringify({ name: 'Jane' }), {
+ *   headers: { 'Content-Type': 'application/json' }
+ * });
+ * ```
+ */
 export function put<T = unknown>(
   path: string,
   body?: BodyInit | null,
@@ -240,6 +312,23 @@ export function put<T = unknown>(
   return fetchiva<T>(path, { ...options, method: "PUT", body });
 }
 
+/**
+ * Makes a PATCH request.
+ * @template T - The expected type of the response data
+ * @param path - The URL path or full URL to request
+ * @param body - The request body (will be sent as-is, use JSON.stringify for objects)
+ * @param options - Request options (headers, timeout, retry config)
+ * @returns A promise that resolves to a FetchivaResponse
+ * @throws {HttpError} When the server returns a non-OK status code
+ * @throws {TimeoutError} When the request exceeds the configured timeout
+ * @throws {NetworkError} When a network failure occurs
+ * @example
+ * ```ts
+ * const { data } = await patch<User>('/api/users/1', JSON.stringify({ name: 'Jane' }), {
+ *   headers: { 'Content-Type': 'application/json' }
+ * });
+ * ```
+ */
 export function patch<T = unknown>(
   path: string,
   body?: BodyInit | null,
@@ -248,6 +337,20 @@ export function patch<T = unknown>(
   return fetchiva<T>(path, { ...options, method: "PATCH", body });
 }
 
+/**
+ * Makes a DELETE request.
+ * @template T - The expected type of the response data
+ * @param path - The URL path or full URL to request
+ * @param options - Request options (headers, timeout, retry config)
+ * @returns A promise that resolves to a FetchivaResponse
+ * @throws {HttpError} When the server returns a non-OK status code
+ * @throws {TimeoutError} When the request exceeds the configured timeout
+ * @throws {NetworkError} When a network failure occurs
+ * @example
+ * ```ts
+ * await del('/api/users/1');
+ * ```
+ */
 export function del<T = unknown>(
   path: string,
   options: HttpMethodOptions = {}
