@@ -11,6 +11,46 @@ A modern, type-safe fetch client for JavaScript and TypeScript.
 - Custom error classes with type guards
 - Convenient HTTP method shortcuts
 
+## Why Fetchiva?
+
+Modern JavaScript already has `fetch`, but it lacks conveniences like automatic retries, timeout handling, and typed responses. Fetchiva wraps the native Fetch API to provide these features without adding unnecessary complexity.
+
+- **Zero dependencies** - Built entirely on native Fetch API
+- **Minimal footprint** - No bloat, just what you need
+- **Progressive enhancement** - Start simple, add features as needed
+
+## Design Philosophy
+
+Fetchiva follows three core principles:
+
+1. **Native-first**: Built on the Fetch API, not replacing it. Your existing fetch knowledge applies directly.
+2. **Type safety without ceremony**: Full TypeScript support that infers types automatically without requiring manual type annotations everywhere.
+3. **Sensible defaults, full control**: Works out of the box but every behavior can be customized through hooks and configuration.
+
+## Environment Support
+
+| Environment | Support |
+|-------------|---------|
+| Node.js | >= 18.0.0 (native fetch) |
+| Browsers | All modern browsers |
+| Deno | ✓ |
+| Bun | ✓ |
+| Edge Runtimes | Cloudflare Workers, Vercel Edge |
+
+Fetchiva uses the native `fetch` API available in all modern JavaScript runtimes. No polyfills required.
+
+## Comparison
+
+| Feature | Fetchiva | Axios | Ky |
+|---------|----------|-------|-----|
+| Bundle size | ~2KB | ~13KB | ~4KB |
+| Dependencies | 0 | 1 | 0 |
+| TypeScript | Native | @types | Native |
+| Retry built-in | ✓ | ✗ | ✓ |
+| Timeout built-in | ✓ | ✓ | ✓ |
+| Hooks/Interceptors | ✓ | ✓ | ✓ |
+| Based on | Fetch | XMLHttpRequest | Fetch |
+
 ## Installation
 
 ```bash
@@ -226,6 +266,16 @@ interface FetchivaResponse<T> {
 - `HttpError` - HTTP errors (4xx, 5xx)
 - `NetworkError` - Network failures
 - `TimeoutError` - Request timeouts
+
+## FAQ
+
+**Q: Should I use Fetchiva instead of Axios?**
+
+If you're starting a new project and targeting modern environments (Node 18+, modern browsers), Fetchiva is a lighter alternative. If you need XMLHttpRequest features (upload progress, older browser support), stick with Axios.
+
+**Q: Can I use Fetchiva with React/Vue/Svelte?**
+
+Yes. Fetchiva is framework-agnostic and works with any JavaScript framework. It's just a fetch wrapper—use it wherever you'd use fetch.
 
 ## License
 
