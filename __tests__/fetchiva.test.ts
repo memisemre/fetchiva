@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi, afterEach } from "vitest";
-import { fetchiva, get, post, put, patch, del } from "./fetchiva";
-import { configureFetchiva } from "./config";
-import { HttpError, NetworkError, TimeoutError } from "./errors";
+import { fetchiva, get, post, put, patch, del } from "../src/fetchiva";
+import { configureFetchiva } from "../src/config";
+import { HttpError, NetworkError, TimeoutError } from "../src/errors";
 
 const mockFetch = vi.fn();
 vi.stubGlobal("fetch", mockFetch);

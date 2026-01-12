@@ -8,7 +8,7 @@ import {
   isTimeoutError,
   isHttpError,
   isFetchivaError,
-} from "./errors";
+} from "../src/errors";
 
 describe("FetchivaError", () => {
   it("should create error with type and message", () => {

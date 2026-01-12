@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import { configureFetchiva, getConfig } from "./config";
+import { configureFetchiva, getConfig } from "../src/config";
 
 describe("config", () => {
   beforeEach(() => {
