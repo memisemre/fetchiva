@@ -33,7 +33,7 @@ It serves as a lightweight roadmap and internal development checklist.
   - [x] `onRequest`
   - [x] `onResponse`
   - [x] `onError`
-- [ ] Better playground examples
+- [x] Better playground examples
 - [x] Basic retry mechanism (network / 5xx only)
 - [x] Write README.md (installation, usage, examples)
 - [x] Add basic test coverage
